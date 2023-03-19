@@ -18,3 +18,4 @@ Ensi viikolla aloitan varsinaisesti projektin, ensimmäisenä toteuttaen labyrin
 Aloitan varmaan vain yhdestä tai kahdesta yksinkertaisesta labyrintista, ja siirryn algoritmien
 toteutukseen.
  
+Käytin ensimmäisellä viikolla aikaa noin 4 tuntia.
