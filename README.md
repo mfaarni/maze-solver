@@ -4,4 +4,4 @@ Sovellus, joka etsii lyhimmän reitin ulos labyrintista eri algoritmeilla ja ver
 [Määrittelydokumentti](https://github.com/mfaarni/maze-solver/blob/main/m%C3%A4%C3%A4rittelydokumentti.md)
 
 ## Viikkoraportit
-[Viikkoraportti 1](https://github.com/mfaarni/maze-solver/blob/main/viikkoraportit/viikkoraportti_1)
+[Viikkoraportti 1](https://github.com/mfaarni/maze-solver/blob/main/viikkoraportit/viikkoraportti_1.md)
