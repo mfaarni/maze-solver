@@ -1,8 +1,3 @@
-import pygame
-from mazes import maze_gen
-
-maze = maze_gen(1)
-
 def find_start(maze):
     y=0
     for row in maze:
@@ -12,8 +7,6 @@ def find_start(maze):
                 return (x, y)
             x+=1
         y+=1
-    print("ei ollu")
-
 
 
 def block_type(maze, x, y):
@@ -21,150 +14,117 @@ def block_type(maze, x, y):
 
 
 
-start=find_start(maze)
-suunta=0
-#  0
-#1   2
-#  3
-print("aloitusruutu:", start)
-
-visited=[[start[0],start[1]]]
-def wall_follower(maze, start_x, start_y, suunta):
+def wall_follower(maze, start_x, start_y, facing, visited):
 
     if block_type(maze, start_x, start_y)=="G":
         return
     
-    if suunta==0:
+    if facing==0:
         
         if block_type(maze, start_x-1, start_y)=="G" or block_type(maze, start_x-1, start_y)==" ":
                 print("vasen", start_x-1, start_y, block_type(maze, start_x-1, start_y))
                 visited.append([start_x-1,start_y])
-                wall_follower(maze,start_x-1,start_y, 1)
+                wall_follower(maze,start_x-1,start_y, 1, visited)
 
         elif block_type(maze, start_x, start_y-1)=="G" or block_type(maze, start_x, start_y-1)==" ":
                 print("ylös", start_x, start_y-1, block_type(maze, start_x, start_y-1))
                 visited.append([start_x,start_y-1])
-                wall_follower(maze,start_x,start_y-1, 0)
+                wall_follower(maze,start_x,start_y-1, 0, visited)
                 
 
         elif block_type(maze, start_x+1, start_y)=="G" or block_type(maze, start_x+1, start_y)==" ":
                 print("oikea", start_x+1, start_y, block_type(maze, start_x+1, start_y))
                 visited.append([start_x+1,start_y])
-                wall_follower(maze,start_x+1,start_y, 2)
+                wall_follower(maze,start_x+1,start_y, 2, visited)
                 
         elif start_y<len(maze)-1: 
             if block_type(maze, start_x, start_y+1)=="G" or block_type(maze, start_x, start_y+1)==" ":
                 print("alas", start_x, start_y+1, block_type(maze, start_x, start_y+1))
                 visited.append([start_x,start_y+1])
-                wall_follower(maze,start_x,start_y+1, 3)
+                wall_follower(maze,start_x,start_y+1, 3, visited)
 
-    elif suunta==1:
+    elif facing==1:
         
         if block_type(maze, start_x, start_y+1)=="G" or block_type(maze, start_x, start_y+1)==" ":
                 print("alas", start_x, start_y+1, block_type(maze, start_x, start_y+1))
                 visited.append([start_x,start_y+1])
-                wall_follower(maze,start_x,start_y+1, 3)
+                wall_follower(maze,start_x,start_y+1, 3, visited)
 
         elif block_type(maze, start_x-1, start_y)=="G" or block_type(maze, start_x-1, start_y)==" ":
                 print("vasen", start_x-1, start_y, block_type(maze, start_x-1, start_y))
                 visited.append([start_x-1,start_y])
-                wall_follower(maze,start_x-1,start_y, 1)
+                wall_follower(maze,start_x-1,start_y, 1, visited)
 
         elif block_type(maze, start_x, start_y-1)=="G" or block_type(maze, start_x, start_y-1)==" ":
                 print("ylös", start_x, start_y-1, block_type(maze, start_x, start_y-1))
                 visited.append([start_x,start_y-1])
-                wall_follower(maze,start_x,start_y-1, 0)
+                wall_follower(maze,start_x,start_y-1, 0, visited)
                 
 
         elif block_type(maze, start_x+1, start_y)=="G" or block_type(maze, start_x+1, start_y)==" ":
                 print("oikea", start_x+1, start_y, block_type(maze, start_x+1, start_y))
                 visited.append([start_x+1,start_y])
-                wall_follower(maze,start_x+1,start_y, 2)
+                wall_follower(maze,start_x+1,start_y, 2, visited)
                 
-    elif suunta==2:
+    elif facing==2:
         
         if block_type(maze, start_x, start_y-1)=="G" or block_type(maze, start_x, start_y-1)==" ":
                 print("ylös", start_x, start_y-1, block_type(maze, start_x, start_y-1))
                 visited.append([start_x,start_y-1])
-                wall_follower(maze,start_x,start_y-1, 0)
+                wall_follower(maze,start_x,start_y-1, 0, visited)
                 
 
         elif block_type(maze, start_x+1, start_y)=="G" or block_type(maze, start_x+1, start_y)==" ":
                 print("oikea", start_x+1, start_y, block_type(maze, start_x+1, start_y))
                 visited.append([start_x+1,start_y])
-                wall_follower(maze,start_x+1,start_y, 2)
+                wall_follower(maze,start_x+1,start_y, 2, visited)
 
         elif block_type(maze, start_x, start_y+1)=="G" or block_type(maze, start_x, start_y+1)==" ":
                 print("alas", start_x, start_y+1, block_type(maze, start_x, start_y+1))
                 visited.append([start_x,start_y+1])
-                wall_follower(maze,start_x,start_y+1, 3)
+                wall_follower(maze,start_x,start_y+1, 3, visited)
 
         elif block_type(maze, start_x-1, start_y)=="G" or block_type(maze, start_x-1, start_y)==" ":
                 print("vasen", start_x-1, start_y, block_type(maze, start_x-1, start_y))
                 visited.append([start_x-1,start_y])
-                wall_follower(maze,start_x-1,start_y, 1)
+                wall_follower(maze,start_x-1,start_y, 1, visited)
 
                 
-    elif suunta==3:
+    elif facing==3:
 
         if block_type(maze, start_x+1, start_y)=="G" or block_type(maze, start_x+1, start_y)==" ":
                 print("oikea", start_x+1, start_y, block_type(maze, start_x+1, start_y))
                 visited.append([start_x+1,start_y])
-                wall_follower(maze,start_x+1,start_y, 2)
+                wall_follower(maze,start_x+1,start_y, 2, visited)
 
         elif block_type(maze, start_x, start_y+1)=="G" or block_type(maze, start_x, start_y+1)==" ":
                 print("alas", start_x, start_y+1, block_type(maze, start_x, start_y+1))
                 visited.append([start_x,start_y+1]) 
-                wall_follower(maze,start_x,start_y+1, 3)
+                wall_follower(maze,start_x,start_y+1, 3, visited)
 
         elif block_type(maze, start_x-1, start_y)=="G" or block_type(maze, start_x-1, start_y)==" ":
                 print("vasen", start_x-1, start_y, block_type(maze, start_x-1, start_y))
                 visited.append([start_x-1,start_y])
-                wall_follower(maze,start_x-1,start_y, 1)
+                wall_follower(maze,start_x-1,start_y, 1, visited)
         
         elif block_type(maze, start_x, start_y-1)=="G" or block_type(maze, start_x, start_y-1)==" ":
                 print("ylös", start_x, start_y-1, block_type(maze, start_x, start_y-1))
                 visited.append([start_x,start_y-1])
-                wall_follower(maze,start_x,start_y-1, 0)
-                
-#print("1,0:", block_type(maze,1,0))
-#print("1,1:", block_type(maze,1,1))
+                wall_follower(maze,start_x,start_y-1, 0, visited)
 
-def grid(window, maze, size):
-    for row in range(len(maze)):
-        for block in range (len(maze[row])-2):
-            if maze[row][block]=="X":
-                pygame.draw.rect(window,(0,0,0), (-50+(block+1)*50,-50+(row+1)*50,40+(block+1)*50,40+(row+1)*50))
-            elif maze[row][block]=="*":
-                pygame.draw.rect(window,(160,0,150), (-50+(block+1)*50,-50+(row+1)*50,40+(block+1)*50,40+(row+1)*50))
-            elif maze[row][block]==" ":
-                pygame.draw.rect(window,(255,255,255), (-50+(block+1)*50,-50+(row+1)*50,40+(block+1)*50,40+(row+1)*50))
-            else:
-                pygame.draw.rect(window,(0,255,255), (-50+(block+1)*50,-50+(row+1)*50,40+(block+1)*50,40+(row+1)*50))
-                  
 
-def draw(window, maze, size):
-    window.fill((255,255,255))
-    grid(window, maze, size)
-    pygame.display.update()
-
-if __name__=="__main__":
-    print(wall_follower(maze,find_start(maze)[0],find_start(maze)[1], suunta))
-    maze_print=maze
+def draw_maze(maze, visited):
+    maze_print=maze.copy()
     move=0
+    draw_visited=[]
+    #print("siirtoja:", move-1)
+
     for i in visited:
-        print(i)
-        maze_print[i[1]]=maze_print[i[1]][:i[0]]+"*"+maze_print[i[1]][i[0]+1:]
+        if i in draw_visited:
+            maze_print[i[1]]=maze_print[i[1]][:i[0]]+"!"+maze_print[i[1]][i[0]+1:]
+        else:     
+            maze_print[i[1]]=maze_print[i[1]][:i[0]]+"*"+maze_print[i[1]][i[0]+1:]
+            draw_visited.append(i)
+            #print("!",draw_visited)
         move+=1
-        #print(len(maze_print))
-    for row in maze_print:
-        print(row)
-    print("siirtoja:", move-1)
-    size=len(maze*50)
-    window = pygame.display.set_mode((size,size))
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
-        
-        draw(window, maze, size)
+    return maze_print
