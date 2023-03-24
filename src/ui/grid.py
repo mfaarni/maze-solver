@@ -1,4 +1,5 @@
 import pygame
+pygame.init()
 def grid(window, maze, size):
     for row in range(len(maze)):
         for block in range (len(maze[row])-2):
@@ -17,7 +18,10 @@ def grid(window, maze, size):
                 pygame.draw.rect(window,(0,255,255), (x,y,x+block_size,y+block_size))
                   
 
-def draw(window, maze, size):
+def draw(window, maze, size, visited):
     window.fill((255,255,255))
     grid(window, maze, size)
+    myfont=pygame.font.SysFont('Corbel', 32)
+    visited_text=myfont.render("Liikkeet: "+str(len(visited)-1),1,(200,200,0))
+    window.blit(visited_text, (2,2))
     pygame.display.update()

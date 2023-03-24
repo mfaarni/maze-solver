@@ -61,7 +61,6 @@ class WallFollower():
 
                         elif self.right(maze, start_x, start_y):
                                 visited.append([start_x+1,start_y])
-                                print("kastse ylös suunta oikeelle")
                                 self.wall_follower(maze,start_x+1,start_y, 2, visited)
                                 
                         elif self.down(maze, start_x, start_y):
@@ -129,7 +128,6 @@ class WallFollower():
                 maze_print=maze.copy()
                 move=0
                 draw_visited=[]
-                #print("siirtoja:", move-1)
 
                 for i in visited:
                         if i in draw_visited:
@@ -137,6 +135,5 @@ class WallFollower():
                         else:     
                                 maze_print[i[1]]=maze_print[i[1]][:i[0]]+"*"+maze_print[i[1]][i[0]+1:]
                                 draw_visited.append(i)
-                                #print("!",draw_visited)
                         move+=1
                 return maze_print

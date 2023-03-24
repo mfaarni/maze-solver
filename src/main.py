@@ -5,7 +5,7 @@ from maze_solver import WallFollower
 if __name__=="__main__":
 
     wf = WallFollower()
-    maze = maze_gen(1)
+    maze = maze_gen(0)
     start=wf.find_start(maze)
     print(start)
     facing=0
@@ -25,4 +25,4 @@ if __name__=="__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-        draw(window, maze_print, size)
+        draw(window, maze_print, size, visited)
