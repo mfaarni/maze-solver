@@ -1,5 +1,9 @@
 class WallFollower():
 
+        def __init__(self):
+                self.facing = 0
+                self.mazes =[]
+
         def find_start(self, maze):
                 y=0
                 for row in maze:
@@ -46,10 +50,12 @@ class WallFollower():
                 
 
         def wall_follower(self, maze, start_x, start_y, facing, visited):
+                self.draw_maze(maze, visited, self.mazes)
+                self.facing=facing
                 if self.block_type(maze, start_x, start_y)=="G":
                         return
                 
-                if facing==0:
+                if self.facing==0:
                         if self.left(maze, start_x, start_y):
                                 visited.append([start_x-1,start_y])
                                 self.wall_follower(maze,start_x-1,start_y, 1, visited)
@@ -69,7 +75,7 @@ class WallFollower():
                         else:
                                 return
 
-                elif facing==1:      
+                elif self.facing==1:      
 
                         if self.down(maze, start_x, start_y):
                                 visited.append([start_x,start_y+1])
@@ -89,7 +95,7 @@ class WallFollower():
                                 self.wall_follower(maze,start_x+1,start_y, 2, visited)
                         else:
                                 return
-                elif facing==2:
+                elif self.facing==2:
                         if self.up(maze, start_x, start_y):
                                 visited.append([start_x,start_y-1])
                                 self.wall_follower(maze,start_x,start_y-1, 0, visited)
@@ -106,7 +112,7 @@ class WallFollower():
                                 visited.append([start_x-1,start_y])
                                 self.wall_follower(maze,start_x-1,start_y, 1, visited)
                                 
-                elif facing==3:
+                elif self.facing==3:
 
                         if self.right(maze, start_x, start_y):
                                 visited.append([start_x+1,start_y])
@@ -124,7 +130,7 @@ class WallFollower():
                                 visited.append([start_x,start_y-1])
                                 self.wall_follower(maze,start_x,start_y-1, 0, visited)
 
-        def draw_maze(self, maze, visited):
+        def draw_maze(self, maze, visited, mazes):
                 maze_print=maze.copy()
                 move=0
                 draw_visited=[]
@@ -136,4 +142,5 @@ class WallFollower():
                                 maze_print[i[1]]=maze_print[i[1]][:i[0]]+"*"+maze_print[i[1]][i[0]+1:]
                                 draw_visited.append(i)
                         move+=1
-                return maze_print
+                mazes.append(maze_print)
+                return
