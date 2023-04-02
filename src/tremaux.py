@@ -31,14 +31,18 @@ class Tremaux():
         
         if x_check and y_check:
             return True
-    
+        if y<len((self.maze))-2 and x<len(self.maze[x]):
+            if self.dead_end(cords):
+                return True
+            
     def mark(self, cords):
         x=cords[0]
         y=cords[1]
-        if self.maze[y][x]!="x":
+        if self.maze[y][x]!="X" and self.maze[y][x]!="O":
+            self.maze[y] = self.maze[y][:x]+"X"+self.maze[y][x+1:]
+        else:
             self.maze[y] = self.maze[y][:x]+"O"+self.maze[y][x+1:]
 
-            self.maze[y] = self.maze[y][:x]+"X"+self.maze[y][x+1:]
     
     def marked(self, cords):
         x=cords[0]
@@ -101,19 +105,20 @@ class Tremaux():
     def dead_end(self, cords):
         x=cords[0]
         y=cords[1]
-        x_check=True
-        y_check=True
-        if self.maze[y-1][x] in "#"  or self.maze[y+1][x] in "#":
-            y_check=False
-        if self.maze[y][x-1] in "#" or self.maze[y][x+1] in "#":
-            x_check=False
-        if x_check or y_check:
-            print("ded end")
+        counter=0
+        if self.maze[y-1][x] in "#":
+            counter+=1
+        if self.maze[y+1][x] in "#":
+            counter+=1
+        if self.maze[y][x-1] in "#":
+            counter+=1
+        if self.maze[y][x+1] in "#":
+            counter+=1
+        if counter>=3:
             return True
-
     def tremaux(self, x, y, facing, visited):
         self.moves+=1
-        if self.moves>80:
+        if self.moves>300:
             return
         for row in self.maze:
             print(row)
@@ -140,14 +145,14 @@ class Tremaux():
             
                 # if only entrance where came from is marked,
                 # pick unmarked entrance, if any.
-            if self.only_entrance_marked([x,y]):
+            if self.only_entrance_marked([x,y]) and self.random_way([x,y]) != None:
                 facing=self.random_way([x,y])
-                print("nyt random suuntaan")
+                print("nyt random suuntaan", facing)
             
 
                 # elif entrance where came from is not double marked,
                 # go back
-            elif self.marked(self.last)!=2:
+            elif self.marked(self.last)!=2 or self.dead_end([x,y]):
                 print("käännös")
                 facing=self.reverse(facing)
 
