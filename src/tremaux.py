@@ -1,5 +1,5 @@
 
-# Luokka toteuttaa Tremauxin ratkaisualgoritmin. 
+# Luokka toteuttaa Tremauxin ratkaisualgoritmin.
 # Luokka alustetaan ascii-muotoisella labyrintilla, sekä aloitus- ja loppupisteellä.
 
 class Tremaux:
@@ -8,7 +8,7 @@ class Tremaux:
         self.start = start
         self.end = end
 
-# Ratkaisualgoritmi, jossa alustetaan taulukko visited, joka pitää yllä vierailtuja solmuja. 
+# Ratkaisualgoritmi, jossa alustetaan taulukko visited, joka pitää yllä vierailtuja solmuja.
 # Tämän avulla voidaan tarkistaa käytävien merkinnät, joita Tremauxin algoritmi hyödyntää.
 # Alustetaan myös path, johon tallennetaan algoritmin löytämä reitti.
 
@@ -31,7 +31,8 @@ class Tremaux:
                 x, y = x + dx, y + dy
                 path.append((x, y))
             else:
-                dx, dy = self.choose_direction(x, y, unmarked_entrances, visited)
+                dx, dy = self.choose_direction(
+                    x, y, unmarked_entrances, visited)
                 visited[x + dx][y + dy] += 1
                 x, y = x + dx, y + dy
                 path.append((x, y))
@@ -85,4 +86,3 @@ class Tremaux:
         print(path)
         print("")
         return path
-
