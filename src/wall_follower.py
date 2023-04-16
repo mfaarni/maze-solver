@@ -14,7 +14,10 @@ class WallFollower():
                                         start = (i, j)
                                 elif maze[i][j] == 'G':
                                         end = (i, j)
-                return (start,end)
+                try:
+                        return (start,end)
+                except:
+                        return ("Alkua tai loppua ei löytynyt.")
         
         def block_type(self, maze, x, y):
                 return maze[y][x]

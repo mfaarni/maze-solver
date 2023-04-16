@@ -84,4 +84,5 @@ class Tremaux:
         print("Reitin kaikki kohdat:")
         print(path)
         print("")
+        return path
 

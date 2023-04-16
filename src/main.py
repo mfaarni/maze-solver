@@ -1,7 +1,7 @@
 import pygame
 from ui.grid import draw
 from mazes import maze_gen
-from maze_solver import WallFollower
+from wall_follower import WallFollower
 from tremaux import Tremaux
 if __name__=="__main__":
 
