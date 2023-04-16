@@ -8,7 +8,7 @@ class TestWallFollower(unittest.TestCase):
         self.test_maze=maze_gen(0)
     
     def test_find_start(self):
-        val=self.wf.find_start(self.test_maze)
+        val=self.wf.find_start_and_end(self.test_maze)
         self.assertEqual(val, (5,7))
 
     def test_find_block_type(self):
