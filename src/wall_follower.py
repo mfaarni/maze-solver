@@ -137,5 +137,10 @@ class WallFollower():
         print("")
         print("Wall Followerin löytämä reitti, pituus:", len(self.visited))
         for row in maze_print:
-            print(row)
+            for col in range(len(row)-1):
+                if row[col]in "!*":
+                        print("\033[91m{}\033[00m".format(row[col]), end= "")
+                else:
+                        print("\033[93m{}\033[00m".format(row[col]), end= "")
+            print(row[len(row)-1])
         return maze_print

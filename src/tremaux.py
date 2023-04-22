@@ -1,4 +1,3 @@
-
 # Luokka toteuttaa Tremauxin ratkaisualgoritmin.
 # Luokka alustetaan ascii-muotoisella labyrintilla, sekä aloitus- ja loppupisteellä.
 
@@ -26,6 +25,8 @@ class Tremaux:
             if len(unmarked_entrances) == 0:
                 x, y = path.pop()
             elif len(unmarked_entrances) == 1:
+                if (x,y) not in path:
+                    path.append((x,y))
                 dx, dy = unmarked_entrances[0]
                 visited[x + dx][y + dy] += 1
                 x, y = x + dx, y + dy
@@ -36,7 +37,6 @@ class Tremaux:
                 visited[x + dx][y + dy] += 1
                 x, y = x + dx, y + dy
                 path.append((x, y))
-
         return path
 
     # Etsii tietyn kohdan ympäröimät merkkaamattomat sisäänkäynnit.
@@ -67,7 +67,7 @@ class Tremaux:
         return count
 
     def is_valid(self, x, y):
-        return 0 <= x < len(self.maze) and 0 <= y < len(self.maze[0]) and self.maze[x][y] != "#"
+        return 0 <= x < len(self.maze) and 0 <= y < len(self.maze[0]) and self.maze[x][y] not in "1234567890#"
 
     def print_path(self, path):
         if path:
@@ -78,7 +78,12 @@ class Tremaux:
                         row += "X"
                     else:
                         row += self.maze[i][j]
-                print(row)
+                for col in range(len(row)-1):
+                    if row[col]in "!*X":
+                        print("\033[91m{}\033[00m".format(row[col]), end= "")
+                    else:
+                        print("\033[93m{}\033[00m".format(row[col]), end= "")
+                print(row[len(row)-1])
         else:
             print("Reittiä ei löytynyt.")
         print("")
