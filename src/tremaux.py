@@ -1,11 +1,13 @@
+import sys
+sys.setrecursionlimit(5000)
 # Luokka toteuttaa Tremauxin ratkaisualgoritmin.
 # Luokka alustetaan ascii-muotoisella labyrintilla, sekä aloitus- ja loppupisteellä.
-
 class Tremaux:
     def __init__(self, maze, start, end):
         self.maze = maze
         self.start = start
         self.end = end
+        self.prints=0
 
 # Ratkaisualgoritmi, jossa alustetaan taulukko visited, joka pitää yllä vierailtuja solmuja.
 # Tämän avulla voidaan tarkistaa käytävien merkinnät, joita Tremauxin algoritmi hyödyntää.
@@ -32,17 +34,22 @@ class Tremaux:
                 x, y = x + dx, y + dy
                 path.append((x, y))
             else:
+                if (x,y) not in path:
+                    path.append((x,y))
                 dx, dy = self.choose_direction(
                     x, y, unmarked_entrances, visited)
                 visited[x + dx][y + dy] += 1
                 x, y = x + dx, y + dy
                 path.append((x, y))
         return path
+        
 
     # Etsii tietyn kohdan ympäröimät merkkaamattomat sisäänkäynnit.
     def get_unmarked_entrances(self, x, y, visited):
         entrances = []
         for dx, dy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+            if (x,y)==(9,38):
+                print((x + dx, y + dy), self.is_valid(x + dx, y + dy), visited[x + dx][y + dy], "!")
             if self.is_valid(x + dx, y + dy) and visited[x + dx][y + dy] == 0:
                 entrances.append((dx, dy))
         return entrances
