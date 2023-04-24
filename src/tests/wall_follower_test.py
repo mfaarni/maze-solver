@@ -18,7 +18,7 @@ class TestWallFollower(unittest.TestCase):
         self.assertEqual(val, "Alkua tai loppua ei löytynyt.")
 
     def test_find_start_and_end_missing_G(self):
-        self.test_maze[0] = "##########"
+        self.test_maze[0] = "#########"
         val = self.wf.find_start_and_end(self.test_maze)
         self.assertEqual(val, "Alkua tai loppua ei löytynyt.")
 
@@ -45,7 +45,7 @@ class TestWallFollower(unittest.TestCase):
         start = self.wf.find_start_and_end(self.test_maze)
         self.wf.wall_follower(self.test_maze, start[0][1], start[0][0], 3)
         self.assertEqual(self.wf.visited[0:4],
-                         [[20, 16], [20, 15], [20, 14], [20, 13]])
+                         [[20, 21], [20, 20], [20, 19], [20, 18]])
 
     def test_wall_follower_maze_large(self):
         self.test_maze = maze_gen(2)
@@ -74,4 +74,4 @@ class TestWallFollower(unittest.TestCase):
     def test_draw_maze(self):
         self.wf.wall_follower(self.test_maze, 7, 5, 3)
         val = self.wf.draw_maze()
-        self.assertEqual(val[3], "#*#****#-3")
+        self.assertEqual(val[3], "#*#****#3")

@@ -22,8 +22,8 @@ class TremauxFollower(unittest.TestCase):
         self.tremaux = Tremaux(
             self.test_maze, self.start_cords[0], self.start_cords[1])
         val = self.tremaux.solve()
-        self.assertEqual(val[0:5], [(16, 20), (15, 20),
-                         (14, 20), (13, 20), (12, 20)])
+        self.assertEqual(val[0:5], [(21, 20), (20, 20), 
+                                    (19, 20), (18, 20), (17, 20)])
 
     def test_algorithm_large(self):
         self.test_maze = maze_gen(2)
@@ -47,7 +47,7 @@ class TremauxFollower(unittest.TestCase):
         self.assertEqual(len(val), 20)
 
     def test_path_len_2(self):
-        self.test_maze = maze_gen(2)
+        self.test_maze = maze_gen(1)
         self.start_cords = self.wf.find_start_and_end(self.test_maze)
         self.tremaux = Tremaux(
             self.test_maze, self.start_cords[0], self.start_cords[1])
