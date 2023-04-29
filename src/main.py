@@ -1,12 +1,13 @@
 import pygame
+import time
 from ui.grid import draw
 from mazes import maze_gen
 from wall_follower import WallFollower
 from tremaux import Tremaux
 if __name__ == "__main__":
 
-    print("Tervetuloa labyrintinratkaisuohjelmaan. \
-          Tällä hetkellä mahdolliset labyrintin koot ovat:")
+    print("Tervetuloa labyrintinratkaisuohjelmaan.")
+    print("Tällä hetkellä mahdolliset labyrintin koot ovat:")
     while True:
         print("0: pieni")
         print("1: Keskikokoinen")
@@ -23,15 +24,21 @@ if __name__ == "__main__":
         if maze:
             wf = WallFollower(maze)
             start = wf.find_start_and_end(maze)
+            tm_start = time.process_time()
             tm = Tremaux(maze, start[0], start[1])
+            tm_end = time.process_time()
             print("")
             print("Tremauxin algoritmin löytämä reitti, pituus:", len(tm.solve()))
-            print("")
+            print("Algoritmin suoritus kesti", "{:.8f}".format(tm_end-tm_start), "sekuntia.")
             tm.print_path(tm.solve())
             facing = 3
             visited = [[start[0][1], start[0][0]]]
+            wf_start = time.process_time()
             wf.wall_follower(maze, start[0][1], start[0][0], facing)
+            wf_end = time.process_time()
             wf.draw_maze()
+            print("Agoritmin suoritus kesti","{:.8f}".format(wf_end-wf_start) ,"sekuntia.")
+            print(""*4)
         else:
             print("\n"*6)
             print("Syöte ei hyväksyttävä, yritä uudelleen!")

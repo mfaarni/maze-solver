@@ -53,6 +53,9 @@ class Tremaux:
             if self.is_valid(x + dx, y + dy) and visited[x + dx][y + dy] == 0:
                 entrances.append((dx, dy))
         return entrances
+    
+
+
 
     # Valitsee suunnan, johon algoritmi kulkee
     def choose_direction(self, x, y, entrances, visited):
@@ -94,7 +97,7 @@ class Tremaux:
         else:
             print("Reittiä ei löytynyt.")
         print("")
-        print("Reitin kaikki kohdat:")
-        print(path)
-        print("")
+        #print("Reitin kaikki kohdat:")
+        #print(path)
+        #print("")
         return path
