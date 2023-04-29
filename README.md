@@ -23,6 +23,8 @@ Lataa projekti ja poetryn riippuvuudet siihen. Suorita terminaalissa main.py ja 
 
 [Viikkoraportti 5](https://github.com/mfaarni/maze-solver/blob/main/viikkoraportit/viikkoraportti_5.md)
 
+[Viikkoraportti 5](https://github.com/mfaarni/maze-solver/blob/main/viikkoraportit/viikkoraportti_6.md)
+
 
 [![codecov](https://codecov.io/github/mfaarni/maze-solver/branch/main/graph/badge.svg?token=0FBS5ZZDXU)](https://codecov.io/github/mfaarni/maze-solver)
 [![CI](https://github.com/mfaarni/maze-solver/actions/workflows/main.yml/badge.svg)](https://github.com/mfaarni/maze-solver/actions/workflows/main.yml)
