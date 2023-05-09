@@ -1,5 +1,5 @@
 # maze-solver
-Sovellus, joka etsii lyhimmän reitin ulos labyrintista eri algoritmeilla ja vertailee tuloksia. Totetutettu Helsingin Yliopiston Tiralabra- kurssille.
+Sovellus, joka etsii lyhimmän reitin ulos labyrintista sekä Wall Follower- että Tremauxin alogritmilla ja vertailee tuloksia. Totetutettu Helsingin Yliopiston Tiralabra- kurssille.
 
 ## Käyttöohje
 Lataa projekti ja poetryn riippuvuudet siihen. Suorita terminaalissa main.py ja seuraa ohjeita.
