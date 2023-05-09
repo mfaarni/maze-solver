@@ -1,41 +1,62 @@
 import pygame
 import time
+from pygame.locals import *
 pygame.init()
 
-
-def grid(window, maze, size):
+def grid(window, maze, size, isMenu):
+    block_size_y = (size/len(maze))
+    block_size_x = (size/len(maze[0]))
+    if isMenu:
+        colours=[
+        (41, 163, 82),
+        (21, 100, 60),
+        (205, 215, 72),
+        (245, 245, 102),
+        (76, 185, 100)
+        ]
+    else:
+        colours=[
+        (41, 163, 82),
+        (21, 100, 60),
+        (205, 215, 72),
+        (245, 245, 102),
+        (141, 255, 182)
+        ]
     for row in range(len(maze)):
-        for block in range(len(maze[row])-2):
-            block_size = (size/len(maze))
-            x = -block_size+(block+1)*(size/len(maze))
-            y = -block_size+(row+1)*(size/len(maze))
-            if maze[row][block] == "#":
-                pygame.draw.rect(window, (0, 0, 0),
-                                 (x, y, x+block_size, y+block_size))
+        y = -block_size_y+(row+1)*(size/len(maze))
+        for block in range(len(maze[row])):
+            x = -block_size_x+(block+1)*(size/len(maze))
+            if maze[row][block] in "#2134567890-":
+                pygame.draw.rect(window, colours[0],
+                                 (x, y, x+block_size_x, y+block_size_y))
+            elif maze[row][block] == "O":
+                pygame.draw.rect(window, colours[1],
+                                 (x, y, x+block_size_x, y+block_size_y))
             elif maze[row][block] == "!":
-                pygame.draw.rect(window, (100, 0, 100),
-                                 (x, y, x+block_size, y+block_size))
-            elif maze[row][block] == "*":
-                pygame.draw.rect(window, (160, 0, 150),
-                                 (x, y, x+block_size, y+block_size))
-            elif maze[row][block] == " ":
-                pygame.draw.rect(window, (255, 255, 255),
-                                 (x, y, x+block_size, y+block_size))
+                pygame.draw.rect(window, colours[2],
+                                 (x, y, x+block_size_x, y+block_size_y))
+            elif maze[row][block] in "*X":
+                pygame.draw.rect(window, colours[3],
+                                 (x, y, x+block_size_x, y+block_size_y))
             else:
-                pygame.draw.rect(window, (0, 255, 255),
-                                 (x, y, x+block_size, y+block_size))
+                pygame.draw.rect(window, colours[4],
+                                 (x, y, x+block_size_x, y+block_size_y))
 
 
 def draw(window, mazes, size, visited, pygame):
-    window.fill((255, 255, 255))
+    running=True
+    window.fill((41, 163, 82))
     for maze in mazes:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-        grid(window, maze, size)
-        myfont = pygame.font.SysFont('Corbel', 32)
-        visited_text = myfont.render(
-            "Liikkeet: "+str(len(visited)-1), 1, (200, 200, 0))
-        window.blit(visited_text, (2, 2))
-        time.sleep(0.05)
-        pygame.display.update()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running=False
+                    return False
+        if running: 
+            grid(window, maze, size, False)
+            if len(visited)<500:
+                time.sleep(2/len(visited))
+            pygame.display.update()
+    return True

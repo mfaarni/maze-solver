@@ -1,3 +1,4 @@
+import copy
 import sys
 sys.setrecursionlimit(5000)
 # Luokka toteuttaa Tremauxin ratkaisualgoritmin.
@@ -5,6 +6,8 @@ sys.setrecursionlimit(5000)
 class Tremaux:
     def __init__(self, maze, start, end):
         self.maze = maze
+        self.mazes=[]
+        self.visualize_visited=[]
         self.start = start
         self.end = end
         self.prints=0
@@ -14,11 +17,13 @@ class Tremaux:
 # Alustetaan myös path, johon tallennetaan algoritmin löytämä reitti.
 
     def solve(self):
+        self.visualize_visited=[]
         visited = [[0] * len(self.maze[0]) for i in range(len(self.maze))]
         path = []
         # Aloitetaan ensimmäisestä kohdasta.
         x, y = self.start
         visited[x][y] = 1
+        self.visualize_visited.append((x,y))
         path.append((x, y))
 
         # Toisteteaan kunnes löydetään ulkoskäynti labyrintistä.
@@ -31,6 +36,7 @@ class Tremaux:
                     path.append((x,y))
                 dx, dy = unmarked_entrances[0]
                 visited[x + dx][y + dy] += 1
+                self.visualize_visited.append((x + dx,y + dy))
                 x, y = x + dx, y + dy
                 path.append((x, y))
             else:
@@ -39,6 +45,7 @@ class Tremaux:
                 dx, dy = self.choose_direction(
                     x, y, unmarked_entrances, visited)
                 visited[x + dx][y + dy] += 1
+                self.visualize_visited.append((x + dx,y + dy))
                 x, y = x + dx, y + dy
                 path.append((x, y))
         return path
@@ -48,14 +55,9 @@ class Tremaux:
     def get_unmarked_entrances(self, x, y, visited):
         entrances = []
         for dx, dy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
-            if (x,y)==(9,38):
-                print((x + dx, y + dy), self.is_valid(x + dx, y + dy), visited[x + dx][y + dy], "!")
             if self.is_valid(x + dx, y + dy) and visited[x + dx][y + dy] == 0:
                 entrances.append((dx, dy))
         return entrances
-    
-
-
 
     # Valitsee suunnan, johon algoritmi kulkee
     def choose_direction(self, x, y, entrances, visited):
@@ -97,7 +99,23 @@ class Tremaux:
         else:
             print("Reittiä ei löytynyt.")
         print("")
-        #print("Reitin kaikki kohdat:")
-        #print(path)
-        #print("")
         return path
+
+    def visualize(self, path):
+        maze_print=self.maze.copy()
+        mazes=[]
+        last=self.visualize_visited[0]
+        for i in self.visualize_visited:
+            if i not in self.visualize_visited[0] and self.visualize_visited[len(self.visualize_visited)-1]:
+                maze_print[i[0]] = maze_print[i[0]][:i[1]] + \
+                    "O"+maze_print[i[0]][i[1]+1:]
+                if last in path:
+                    maze_print[last[0]] = maze_print[last[0]][:last[1]] + \
+                        "X"+maze_print[last[0]][last[1]+1:]
+                else:
+                    maze_print[last[0]] = maze_print[last[0]][:last[1]] + \
+                        "!"+maze_print[last[0]][last[1]+1:]
+                last=i
+                app=copy.copy(maze_print)
+                mazes.append(app)
+        return mazes

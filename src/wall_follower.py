@@ -1,3 +1,6 @@
+import copy
+
+
 class WallFollower():
 
     def __init__(self, maze):
@@ -119,21 +122,26 @@ class WallFollower():
                 self.wall_follower(maze, start_x, start_y-1, 0)
 
     def draw_maze(self):
+        self.mazes=[]
         maze_print = self.maze.copy()
-        move = 0
         draw_visited = []
+        last=self.visited[0]
 
         for i in self.visited:
             if i not in self.visited[0] and self.visited[len(self.visited)-1]:
-                if i in draw_visited:
-                    maze_print[i[1]] = maze_print[i[1]][:i[0]] + \
-                        "!"+maze_print[i[1]][i[0]+1:]
+                maze_print[i[1]] = maze_print[i[1]][:i[0]] + \
+                    "O"+maze_print[i[1]][i[0]+1:]
+                    
+                if last in draw_visited:
+                    maze_print[last[1]] = maze_print[last[1]][:last[0]] + \
+                        "!"+maze_print[last[1]][last[0]+1:]
                 else:
-                    maze_print[i[1]] = maze_print[i[1]][:i[0]] + \
-                        "*"+maze_print[i[1]][i[0]+1:]
-                    draw_visited.append(i)
-                move += 1
-        self.mazes.append(maze_print)
+                    maze_print[last[1]] = maze_print[last[1]][:last[0]] + \
+                        "*"+maze_print[last[1]][last[0]+1:]
+                draw_visited.append(last)
+                last=i
+                app=copy.copy(maze_print)
+                self.mazes.append(app)
         print("")
         print("Wall Followerin löytämä reitti, pituus:", len(self.visited))
         for row in maze_print:
@@ -143,4 +151,4 @@ class WallFollower():
                 else:
                         print("\033[93m{}\033[00m".format(row[col]), end= "")
             print(row[len(row)-1])
-        return maze_print
+        return self.visited
