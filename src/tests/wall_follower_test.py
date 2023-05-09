@@ -74,4 +74,4 @@ class TestWallFollower(unittest.TestCase):
     def test_draw_maze(self):
         self.wf.wall_follower(self.test_maze, 7, 5, 3)
         val = self.wf.draw_maze()
-        self.assertEqual(val[3], "#*#****#3")
+        self.assertEqual(val[3], [5, 6])

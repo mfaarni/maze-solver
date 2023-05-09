@@ -24,9 +24,9 @@ if __name__ == "__main__":
 
         if maze:
             wf = WallFollower(maze)
-            start = wf.find_start_and_end(maze)
+            last = wf.find_start_and_end(maze)
             tm_start = time.process_time()
-            tm = Tremaux(maze, start[0], start[1])
+            tm = Tremaux(maze, last[0], last[1])
             tm_end = time.process_time()
             print("")
             print("Tremauxin algoritmin löytämä reitti, pituus:", len(tm.solve()))
@@ -34,7 +34,7 @@ if __name__ == "__main__":
             tm_path = tm.print_path(tm.solve())
             facing = 3
             wf_start = time.process_time()
-            wf.wall_follower(maze, start[0][1], start[0][0], facing)
+            wf.wall_follower(maze, last[0][1], last[0][0], facing)
             wf_end = time.process_time()
             visited = wf.draw_maze()
             print("Agoritmin suoritus kesti","{:.8f}".format(wf_end-wf_start) ,"sekuntia.")
