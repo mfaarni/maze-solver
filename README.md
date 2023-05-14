@@ -2,7 +2,8 @@
 Sovellus, joka etsii lyhimmän reitin ulos labyrintista sekä Wall Follower- että Tremauxin alogritmilla ja vertailee tuloksia. Totetutettu Helsingin Yliopiston Tiralabra- kurssille.
 
 ## Käyttöohje
-Lataa projekti ja poetryn riippuvuudet siihen. Suorita terminaalissa main.py ja seuraa ohjeita.
+Lataa projekti ja poetryn riippuvuudet komennolla ```poetry install```. Tämän jälkeen ohjelma käynnistyy komennolla ```poetry run invoke start```. 
+Ohjelma toimii valitsemalla vaihtoehdoista hiirellä ja palaamalla takaisin päin ```esc```-näppäimellä.
 
 ## Dokumentit
 
