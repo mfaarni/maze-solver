@@ -55,6 +55,23 @@ class TestWallFollower(unittest.TestCase):
         self.assertEqual(self.wf.visited[0:4],
                          [[29, 31], [29, 30], [30, 30], [30, 29]])
 
+    def test_wall_follower_maze_huge(self):
+        self.test_maze = maze_gen(3)
+        self.wf = WallFollower(self.test_maze)
+        start = self.wf.find_start_and_end(self.test_maze)
+        self.wf.wall_follower(self.test_maze, start[0][1], start[0][0], 3)
+        self.assertEqual(self.wf.visited[0:4],
+                         [[79, 80], [79, 79], [78, 79], [77, 79]])
+
+
+    def test_wall_follower_maze_huge_len(self):
+        self.test_maze = maze_gen(3)
+        self.wf = WallFollower(self.test_maze)
+        start = self.wf.find_start_and_end(self.test_maze)
+        self.wf.wall_follower(self.test_maze, start[0][1], start[0][0], 3)
+        self.assertEqual(len(self.wf.visited),
+                         4771)
+
     def test_wall_follower_maze_trem(self):
         self.test_maze = maze_gen("t")
         self.wf = WallFollower(self.test_maze)
