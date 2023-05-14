@@ -1,5 +1,7 @@
 import copy
 
+# Luokka toteuttaa wall follower- algoritmin, joka etsii seinää seuraamalla reitin
+# ulos labyrintista. Luokkaa luodessa annetaan sille syötteenä labyrintti, josta reitti halutaan etsiä.
 
 class WallFollower():
 
@@ -10,6 +12,8 @@ class WallFollower():
         self.start_cords = self.find_start_and_end(self.maze)
         self.visited = [[self.start_cords[0][1], self.start_cords[0][0]]]
 
+    # Funktio, joka etsii labyrintin aloitus- ja loppukohdat.
+    # Tätä käytetään myös tremauxin algortimin yhteydessä.
     def find_start_and_end(self, maze):
         for i in range(len(maze)):
             for j in range(len(maze[0])):
@@ -22,26 +26,35 @@ class WallFollower():
         except:
             return "Alkua tai loppua ei löytynyt."
 
+    # Palauttaa koordinaateissa sijaitsevan labyrintin ruudun arvon.
     def block_type(self, maze, x, y):
         return maze[y][x]
 
+    # Seuraavat neljä funktiota palauttavat arvot, jotka näissä eri suunnissa ovat,
+    # eli onko suunnassa maali tai vapaa ruutu.
     def left(self, start_x, start_y):
         return self.block_type(self.maze, start_x-1, start_y) == "G" \
-                or self.block_type(self.maze, start_x-1, start_y) == " "
+            or self.block_type(self.maze, start_x-1, start_y) == " "
 
     def right(self, start_x, start_y):
         return self.block_type(self.maze, start_x+1, start_y) == "G" \
-                or self.block_type(self.maze, start_x+1, start_y) == " "
+            or self.block_type(self.maze, start_x+1, start_y) == " "
 
     def up(self, start_x, start_y):
         return self.block_type(self.maze, start_x, start_y-1) == "G" \
-                or self.block_type(self.maze, start_x, start_y-1) == " "
+            or self.block_type(self.maze, start_x, start_y-1) == " "
 
     def down(self, start_x, start_y):
         if start_y < len(self.maze)-1:
             return self.block_type(self.maze, start_x, start_y+1) == "G" \
-                or self.block_type(self.maze, start_x, start_y+1) == " " 
+                or self.block_type(self.maze, start_x, start_y+1) == " "
         return False
+
+    # Tämä on varsinaisen algoritmin toteutus.
+    # Algoritmi toimii rekursiivisesti ja kulkee ruutu ruudulta,
+    # vaihtaen suuntaa, johon se 'katsoo'.
+    # Tämän suunnan pohjalta määritellään, missä suunnassa on vasen, joka on laita,
+    # jota tämä algoritmi seuraa.
 
     def wall_follower(self, maze, start_x, start_y, facing):
         self.facing = facing
@@ -121,17 +134,19 @@ class WallFollower():
                 self.visited.append([start_x, start_y-1])
                 self.wall_follower(maze, start_x, start_y-1, 0)
 
+    # Funktio muodostaa algoritmin jokaisesta siirrosta uuden version labyrintista.
+    # Näiden pohjalta tulostetaan lopullinen reitti ja visualisoidaan pygamessa algoritmin toiminta.
     def draw_maze(self):
-        self.mazes=[]
+        self.mazes = []
         maze_print = self.maze.copy()
         draw_visited = []
-        last=self.visited[0]
+        last = self.visited[0]
 
         for i in self.visited:
             if i not in self.visited[0] and self.visited[len(self.visited)-1]:
                 maze_print[i[1]] = maze_print[i[1]][:i[0]] + \
                     "O"+maze_print[i[1]][i[0]+1:]
-                    
+
                 if last in draw_visited:
                     maze_print[last[1]] = maze_print[last[1]][:last[0]] + \
                         "!"+maze_print[last[1]][last[0]+1:]
@@ -139,16 +154,16 @@ class WallFollower():
                     maze_print[last[1]] = maze_print[last[1]][:last[0]] + \
                         "*"+maze_print[last[1]][last[0]+1:]
                 draw_visited.append(last)
-                last=i
-                app=copy.copy(maze_print)
+                last = i
+                app = copy.copy(maze_print)
                 self.mazes.append(app)
         print("")
         print("Wall Followerin löytämä reitti, pituus:", len(self.visited))
         for row in maze_print:
             for col in range(len(row)-1):
-                if row[col]in "!*":
-                        print("\033[91m{}\033[00m".format(row[col]), end= "")
+                if row[col] in "!*":
+                    print("\033[91m{}\033[00m".format(row[col]), end="")
                 else:
-                        print("\033[93m{}\033[00m".format(row[col]), end= "")
+                    print("\033[93m{}\033[00m".format(row[col]), end="")
             print(row[len(row)-1])
         return self.visited

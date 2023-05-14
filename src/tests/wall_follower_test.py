@@ -63,7 +63,6 @@ class TestWallFollower(unittest.TestCase):
         self.assertEqual(self.wf.visited[0:4],
                          [[79, 80], [79, 79], [78, 79], [77, 79]])
 
-
     def test_wall_follower_maze_huge_len(self):
         self.test_maze = maze_gen(3)
         self.wf = WallFollower(self.test_maze)

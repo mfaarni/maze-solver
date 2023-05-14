@@ -3,24 +3,25 @@ import time
 from pygame.locals import *
 pygame.init()
 
+
 def grid(window, maze, size, isMenu):
     block_size_y = (size/len(maze))
     block_size_x = (size/len(maze[0]))
     if isMenu:
-        colours=[
-        (41, 163, 82),
-        (21, 100, 60),
-        (205, 215, 72),
-        (245, 245, 102),
-        (76, 185, 100)
+        colours = [
+            (41, 163, 82),
+            (21, 100, 60),
+            (205, 215, 72),
+            (245, 245, 102),
+            (76, 185, 100)
         ]
     else:
-        colours=[
-        (41, 163, 82),
-        (21, 100, 60),
-        (205, 215, 72),
-        (245, 245, 102),
-        (141, 255, 182)
+        colours = [
+            (41, 163, 82),
+            (21, 100, 60),
+            (205, 215, 72),
+            (245, 245, 102),
+            (141, 255, 182)
         ]
     for row in range(len(maze)):
         y = -block_size_y+(row+1)*(size/len(maze))
@@ -44,7 +45,7 @@ def grid(window, maze, size, isMenu):
 
 
 def draw(window, mazes, size, visited, pygame):
-    running=True
+    running = True
     window.fill((41, 163, 82))
     for maze in mazes:
         for event in pygame.event.get():
@@ -52,11 +53,11 @@ def draw(window, mazes, size, visited, pygame):
                 exit()
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    running=False
+                    running = False
                     return False
-        if running: 
+        if running:
             grid(window, maze, size, False)
-            if len(visited)<500:
+            if len(visited) < 500:
                 time.sleep(2/len(visited))
             pygame.display.update()
     return True
